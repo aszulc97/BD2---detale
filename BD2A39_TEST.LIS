@@ -1,0 +1,56 @@
+SQL> 
+SQL> SELECT NAZWA FROM KATEGORIE;
+
+NAZWA               
+--------------------
+BALUSTRADY
+SCHODY
+RZEZBIONE
+KOLUMNY
+KONSOLE
+
+SQL> 
+SQL> SELECT DETALE.NAZWA, NOTATKI.OBRAZ, NOTATKI.OPIS 
+  2  FROM DETALE
+  3  INNER JOIN NOTATKI
+  4      ON DETALE.ID_DETALU=NOTATKI.ID_DETALU;
+
+NAZWA                          OBRAZ
+------------------------------ --------------------------------------------------------------------------------
+OPIS                                                                                                                                                                                                                                                                                                        
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+AMBONA                         FFD8FFE000104A46494600010101004800480000FFE1009045786966000049492A00080000000700 
+Ambona skonstruowana na planie heksagonu. Ambone zdobia rzezby nawiazujace do form antycznych: piec plaskorzezb, piec alegorii cnot i Jan Chrzciciel nad kolumnami, figury ewangelistow i prorokow w naroznikach. Podtrzymywana przez centralna kolumne oraz szesc kolumn zewnetrznych.                     
+
+BALUSTRADA AMBONY              FFD8FFE000104A46494600010101004800480000FFE10B0E584D50003A2F2F6E732E61646F62652E 
+Jedna z plaskorzezb umieszczonych na balustradzie ambony przestawia scene ukrzyzowania Chrystusa.                                                                                                                                                                                                           
+
+RZEZBA LWA                     FFD8FFE000104A46494600010101004800480000FFDB004300050304040403050404040505050607 
+Rzezba lwa u podnozy kolumny moze przedstawiac zarowno doroslego lwa, jak i przedstawione na zdjeciu lwiatko.                                                                                                                                                                                               
+
+
+SQL> 
+SQL> SELECT KATEGORIE.NAZWA , DETALE.NAZWA 
+  2  FROM DETALE 
+  3  INNER JOIN KATEGORIE_DETALI
+  4      ON DETALE.ID_DETALU=KATEGORIE_DETALI.ID_DETALU
+  5  INNER JOIN KATEGORIE
+  6      ON KATEGORIE_DETALI.ID_KATEGORII=KATEGORIE.ID_KATEGORII
+  7  ORDER BY KATEGORIE.ID_KATEGORII;
+
+NAZWA                NAZWA                         
+-------------------- ------------------------------
+BALUSTRADY           BALUSTRADA SCHODOWA           
+BALUSTRADY           BALUSTRADA AMBONY             
+SCHODY               SCHODY NA AMBONE              
+RZEZBIONE            RZEZBA LWA                    
+RZEZBIONE            AMBONA                        
+RZEZBIONE            KONSOLA POD AMBONA            
+RZEZBIONE            BALUSTRADA AMBONY             
+KOLUMNY              KOLUMNA POD AMBONA            
+KONSOLE              KONSOLA POD AMBONA            
+
+9 rows selected. 
+
+SQL> 
+SQL> spool off 

@@ -1,0 +1,84 @@
+SQL> 
+SQL> --Próba zmiany id_detalu w notatce
+SQL> UPDATE NOTATKI
+  2  SET ID_DETALU=4
+  3  WHERE TYTUL='CALOKSZTALT';
+
+Error starting at line : 7 in command -
+UPDATE NOTATKI
+SET ID_DETALU=4
+WHERE TYTUL='CALOKSZTALT'
+Error report -
+ORA-20225: Non Transferable FK constraint  on table NOTATKI is violated
+ORA-06512: przy "BD2A39.FKNTM_NOTATKI", linia 2
+ORA-04088: b³¹d w trakcie wykonywania wyzwalacza 'BD2A39.FKNTM_NOTATKI'
+
+SQL> 
+SQL> --Próba wstawienia w detalu tylko id_detalu, pozostale kolumny null
+SQL> insert into detale (id_detalu) values (detal_seq.nextval);
+
+Error starting at line : 12 in command -
+insert into detale (id_detalu) values (detal_seq.nextval)
+Error report -
+ORA-01400: nie mo¿na wstawiæ wartoœci NULL do ("BD2A39"."DETALE"."NAZWA")
+
+SQL> 
+SQL> --Próba usuniêcia kategorii, do której sa przypisane detale
+SQL> delete from kategorie
+  2  where id_kategorii=4;
+
+Error starting at line : 15 in command -
+delete from kategorie
+where id_kategorii=4
+Error report -
+ORA-02292: naruszono wiêzy spójnoœci (BD2A39.KATEGORIE_DETALI_KATEGORIE_FK) - znaleziono rekord podrzêdny
+
+SQL> 
+SQL> insert into kategorie values (kategoria_seq.nextval, 'gzymsy');
+
+1 row inserted.
+
+SQL> select * from kategorie;
+
+ID_KATEGORII NAZWA               
+------------ --------------------
+           2 BALUSTRADY          
+           3 SCHODY              
+           4 RZEZBIONE           
+           5 KOLUMNY             
+           6 KONSOLE             
+          22 gzymsy              
+
+6 rows selected. 
+
+SQL> 
+SQL> --Zakoñczone sukcesem usuniecie pustej kategorii
+SQL> delete from kategorie where nazwa='gzymsy';
+
+1 row deleted.
+
+SQL> select * from kategorie;
+
+ID_KATEGORII NAZWA               
+------------ --------------------
+           2 BALUSTRADY          
+           3 SCHODY              
+           4 RZEZBIONE           
+           5 KOLUMNY             
+           6 KONSOLE             
+
+5 rows selected. 
+
+SQL> 
+SQL> --Próba usuniecia detalu, ktory ma przypisana notatke
+SQL> delete from detale
+  2  where id_detalu=2;
+
+Error starting at line : 26 in command -
+delete from detale
+where id_detalu=2
+Error report -
+ORA-02292: naruszono wiêzy spójnoœci (BD2A39.DETALE_DETALE_FK) - znaleziono rekord podrzêdny
+
+SQL> 
+SQL> spool off
